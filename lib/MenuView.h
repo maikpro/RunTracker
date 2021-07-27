@@ -7,6 +7,9 @@
 #include "MenuIcons.h"
 #include "MenuItem.h"
 #include "RunView.h"
+#include "WeatherView.h"
+#include "ClockView.h"
+#include "SettingsView.h"
 
 class MenuView {
     public:

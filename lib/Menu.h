@@ -8,6 +8,9 @@
 
 #include "MenuItem.h"
 #include "RunView.h"
+#include "WeatherView.h"
+#include "ClockView.h"
+#include "SettingsView.h"
 
 using namespace std;
 

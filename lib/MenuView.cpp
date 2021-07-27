@@ -1,7 +1,5 @@
 #include "MenuView.h"
 
-
-
 void MenuView::showMenu(int currentId){
     //Menu Anzeigen
     switch(currentId) {
@@ -26,21 +24,38 @@ void MenuView::changeView(int currentId, MenuItem menuItem){
     M5.Lcd.clearDisplay();
     switch(currentId) {
         case 0:
+            //showRun
             {
                 //Downcast Parent(MenuItem) -> Child (RunView) 
                 RunView* run = (RunView*) &menuItem;
                 run->showView();
                 break;
             }
+        
         case 1:
             //showWeather
-            break;
+            {
+                WeatherView* weather = (WeatherView*) &menuItem;
+                weather->showView();
+                break;
+            }
+        
         case 2:
-            //showTimer
-            break;
+            //showClock
+            {
+                ClockView* clock = (ClockView*) &menuItem;
+                clock->showView();
+                break;
+            }
+
         case 3:
             //showSettings
-            break;
+            {
+                SettingsView* settings = (SettingsView*) &menuItem;
+                settings->showView();
+                break;
+            }
+            
         default:
             //nothing
             break;

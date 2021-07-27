@@ -1,15 +1,11 @@
 
 
 /**
- * Hochschule Osnabrück - Modul: Internet of Things / Industrie 4.0 (Praktikum)
- * Versuch 4: Überwachung der Bodenfeuchtigkeit
- * 
- * @file Proba_Maik_Versuch_4.ino
+ * Hochschule Osnabrück - Modul: Internet of Things / Industrie 4.0
+ * Projekt: RunTracker
+ * Tech-Stack: M5Stack (C/C++), MQTT Broker (HIVEMQ), NodeJS (Server), MongoDB
  *
- * @brief Ziel ist es, das Feuchtigkeitslevel der Erde in einem Blumentopf zu messen und dadurch entscheiden zu können, ob die Pflanze mit Wasser versorgt
- * werden muss, oder ob die Erde noch feucht genug ist.
- *
- * @author Maik Proba, Mat-Nr. 886125
+ * @author Maik Proba
  * Contact: maik.proba@hs-osnabrueck.de
  * 
  *  
