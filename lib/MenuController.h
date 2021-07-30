@@ -2,7 +2,6 @@
 #define MENUCONTROLLER_H
 
 #include "Arduino.h"
-#include <M5Stack.h>
 
 #include "Menu.h"
 #include "MenuView.h"
@@ -18,6 +17,9 @@ class MenuController {
         void naechsterMenupunkt();
         void vorherigerMenupunkt();
         void setIsMenuVisible();
+
+        bool getIsMenuVisible();
+        int getCurrentId();
 };
 
 #endif

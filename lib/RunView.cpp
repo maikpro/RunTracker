@@ -5,7 +5,9 @@ RunView::RunView(int id, String title){
     this->title=title;
 }
 
-void RunView::showView(){
-    M5.Lcd.setCursor(150, 120);
-    M5.Lcd.println("New Runner Test Test");
+void RunView::showView(Timer timer){
+    M5.Lcd.clearDisplay();
+    M5.Lcd.setTextSize(6);
+    M5.Lcd.setCursor(80, 110);
+    M5.Lcd.printf("%02d:%02d", timer.getMinutes(), timer.getSeconds());
 }

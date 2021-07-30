@@ -24,7 +24,7 @@ class Menu {
         Menu();
         int getCurrentId(){ return this->currentId; };
         bool getIsMenuVisible(){ return this->isMenuVisible; };
-        MenuItem getIMenuItem(){ return this->menuList.at(this->currentId); };
+        MenuItem getMenuItem(){ return this->menuList.at(this->currentId); };
         
         void setCurrentId(int currentId){ this->currentId = currentId; };
         void setIsMenuVisible(bool isMenuVisible){ this->isMenuVisible=isMenuVisible; };

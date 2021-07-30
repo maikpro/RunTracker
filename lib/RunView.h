@@ -5,6 +5,7 @@
 #include <M5Stack.h>
 
 #include "MenuItem.h"
+#include "Timer.h"
 
 class RunView : public MenuItem {
     /*private:
@@ -17,7 +18,8 @@ class RunView : public MenuItem {
         int getId(){ return this->id; }
         String getTitle(){ return this->title; }
 
-        void showView();
+        void showView(Timer timer);
+        //void showView();
 };
 
 

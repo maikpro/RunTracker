@@ -9,9 +9,9 @@ void MenuController::updateView(){
     bool isMenuVisible = this->menuModel.getIsMenuVisible();
     if( isMenuVisible ){
         this->menuView.showMenu(this->menuModel.getCurrentId());
-    } else{
+    } /*else{
         this->menuView.changeView(this->menuModel.getCurrentId(), this->menuModel.getIMenuItem());
-    }
+    }*/
 }
 
 void MenuController::naechsterMenupunkt(){
@@ -37,4 +37,14 @@ void MenuController::vorherigerMenupunkt(){
 void MenuController::setIsMenuVisible(){
     bool isMenuVisible = this->menuModel.getIsMenuVisible();
     this->menuModel.setIsMenuVisible(!isMenuVisible);
+}
+
+bool MenuController::getIsMenuVisible(){
+    bool isMenuVisible = this->menuModel.getIsMenuVisible();
+    return isMenuVisible;
+}
+
+int MenuController::getCurrentId(){
+    int currentId = this->menuModel.getCurrentId();
+    return currentId;
 }

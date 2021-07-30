@@ -19,7 +19,7 @@ void MenuView::showMenu(int currentId){
             M5.Lcd.drawBitmap(0, 0, 320, 240, (uint16_t *) no_selection_menuIcons);
     }
 }
-
+/*
 void MenuView::changeView(int currentId, MenuItem menuItem){
     M5.Lcd.clearDisplay();
     switch(currentId) {
@@ -60,4 +60,4 @@ void MenuView::changeView(int currentId, MenuItem menuItem){
             //nothing
             break;
     }
-}
+}*/

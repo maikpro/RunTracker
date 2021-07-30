@@ -14,7 +14,7 @@
 class MenuView {
     public:
         void showMenu(int currentId);
-        void changeView(int currentId, MenuItem menuItem);
+        //void changeView(int currentId, MenuItem menuItem);
         void showRun();
 };
 
