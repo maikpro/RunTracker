@@ -5,6 +5,7 @@
 #include <M5Stack.h>
 
 #include "MenuItem.h"
+#include "Weather.h"
 
 class WeatherView : public MenuItem {
     /*private:
@@ -17,7 +18,7 @@ class WeatherView : public MenuItem {
         int getId(){ return this->id; }
         String getTitle(){ return this->title; }
 
-        void showView();
+        void showView(Weather weather);
 };
 
 

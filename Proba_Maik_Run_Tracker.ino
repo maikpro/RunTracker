@@ -1,5 +1,3 @@
-
-
 /**
  * Hochschule Osnabrück - Modul: Internet of Things / Industrie 4.0
  * Projekt: RunTracker
@@ -13,6 +11,7 @@
 
 
 #include <M5Stack.h>
+#include <WiFi.h>
 
 #include "Menu.h" //Modell
 #include "MenuView.h" //View
@@ -22,6 +21,14 @@
 #include "RunView.h" //View
 #include "RunController.h" //Controller
 
+#include "Weather.h" //Modell
+#include "WeatherView.h" //View
+#include "WeatherController.h" //Controller
+
+//WLAN Zugang
+const char* ssid = "NoFreeWiFi";
+const char* password = "57655658286507878869";
+
 Menu menu;
 MenuView menuView;
 MenuController menuController(menu, menuView);
@@ -29,6 +36,10 @@ MenuController menuController(menu, menuView);
 Timer timer;
 RunView runView;
 RunController runController(timer, runView);
+
+Weather weather;
+WeatherView weatherView;
+WeatherController weatherController(weather, weatherView);
 
 
 //Die Pinbezeichnungen für die Buttons lauten GPIO_NUM_39 (BtnA), GPIO_NUM_38 (BtnB) sowie GPIO_NUM_37 (BtnC).
@@ -59,21 +70,45 @@ void run_buttonC_clicked(){
    runController.stop();
 }
 
+void weather_buttonA_clicked(){
+   weatherController.heute();
+}
 
+void weather_buttonC_clicked(){
+   weatherController.woche();
+}
 
 void setup() {
+   Serial.begin(115200);
+
+    //1. Initialisierung der WiFi-Verbindung
+   WiFi.begin(ssid, password);
+   WiFi.setSleep(false);
+   //2. Warten auf erfolgreiche WiFi-Verbindung 
+   while (WiFi.status() != WL_CONNECTED) {
+      Serial.print(".");
+      delay(1000);
+   }
    //M5Stack Init
    M5.begin();
    M5.Power.begin();
 }
 
+
+
 void loop() {
+   //WiFi.setSleep(false);
+
+   //3 Sekunden mittleren Button gedrückt halten um ins Hauptmenu zu gelangen. 
+   if( menuController.getIsMenuVisible()==false && M5.BtnB.pressedFor(3000) ){
+      menuController.setIsMenuVisible();
+   }
 
    //Wenn Nutzer im Hauptmenu:
    if( menuController.getIsMenuVisible() ){
       //Menu aktualisieren
       menuController.updateView();
-      
+
       //Nutzer wechselt Menupunkt
       //Wenn Button A gedrückt wird:
       attachInterrupt(buttonA, hauptmenu_buttonA_clicked, RISING);
@@ -99,14 +134,24 @@ void loop() {
       //Wenn Button C (STOP) gedrückt wird:
       attachInterrupt(buttonC, run_buttonC_clicked, RISING);
 
-      //3 Sekunden mittleren Button gedrückt halten um ins Hauptmenu zu gelangen. 
-      if( M5.BtnB.pressedFor(3000) ){
-         menuController.setIsMenuVisible();
-      }
-
       delay(1000); //Flackern verhindern...
    }
 
+   //Wenn Nutzer im WeatherView ist:
+   else if( menuController.getIsMenuVisible()==false && menuController.getCurrentId() == 1 ){
+      //weatherController.updateView();
+      weatherController.httpGet();
+
+      //Button Interakionen
+      //Wenn Button A (HEUTE) gedrückt wird:
+      attachInterrupt(buttonA, weather_buttonA_clicked, RISING);
+
+      //Wenn Button C (WOCHE) gedrückt wird:
+      attachInterrupt(buttonC, weather_buttonC_clicked, RISING);
+      delay(1000);
+   }
+
    runController.updateTime(); //Timer soll auch weiterlaufen wenn der View gewechselt wird...
+   M5.update();
 }
 
