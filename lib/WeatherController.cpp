@@ -1,42 +1,61 @@
 #include "WeatherController.h"
 
-#include <M5Stack.h> //ZUM TESTEN von httpGet methode
-
-#include "apiKey.h"
-
 WeatherController::WeatherController(Weather weatherModel, WeatherView weatherView){
     this->weatherModel=weatherModel;
     this->weatherView=weatherView;
+
+    this->isHeute=true;
+    this->isWoche=false;
 }
 
 void WeatherController::updateView(){
-    this->weatherView.showView(this->weatherModel);
+    if( this->isHeute ){
+        httpGetHeute();
+        this->weatherView.showViewHeute(this->weatherModel);
+    } else if( this->isWoche ){
+        httpGetWoche();
+        this->weatherView.showViewWoche(this->weatherModel);
+    }
+    
 }
 
 void WeatherController::heute(){
     //heutiges Wetter anzeigen...
+    this->isHeute=true;
+    this->isWoche=false;
 }
 
 void WeatherController::woche(){
     //wetter der ganzen Woche anzeigen...
+    this->isWoche=true;
+    this->isHeute=false;
 }
 
 //"https://api.openweathermap.org/data/2.5/weather?q=osnabrueck&units=metric&appid=myKey"
-void WeatherController::httpGet(){
-    this->httpClient.begin("https://api.openweathermap.org/data/2.5/weather?q=osnabrueck&units=metric&appid=" + myApiKey);
+void WeatherController::httpGetHeute(){
+    //this->httpClient.begin("https://api.openweathermap.org/data/2.5/weather?q=osnabrueck&units=metric&appid=" + myApiKey);
+    
+    this->httpClient.begin(restUrl + "/weather/api/heute"); //REST API vom NodeJS Server
     int httpStatus = httpClient.GET();
     
     if(httpStatus == 200){
         String dataFromApi = httpClient.getString();
         this->weatherModel.setData(dataFromApi);
-        this->weatherModel.parseJSON(); //Temperatur erstmal auslesen...
+        this->weatherModel.parseJSONHeute(); //Temperatur erstmal auslesen...
+    }
 
-        //Anzeigen
-        M5.Lcd.clearDisplay();
-        M5.Lcd.setCursor(10,10);
-        M5.Lcd.setTextSize(1);
-        M5.Lcd.println(this->weatherModel.getData());
-        M5.Lcd.println(this->weatherModel.getTemperatur());
+    httpClient.end();
+}
+
+void WeatherController::httpGetWoche(){
+    //Wochen API auslesen!!
+    this->httpClient.begin(restUrl + "/weather/api/woche"); //REST API vom NodeJS Server
+    int httpStatus = httpClient.GET();
+    
+    if(httpStatus == 200){
+        String dataFromApi = httpClient.getString();
+        this->weatherModel.setData(dataFromApi);
+        this->weatherModel.parseJSONWoche(); //Temperatur erstmal auslesen...
     }
 
     httpClient.end();

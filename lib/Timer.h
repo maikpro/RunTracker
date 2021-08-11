@@ -3,6 +3,8 @@
 
 #include "Arduino.h"
 
+#include <ArduinoJson.h> //Um JSON Objekte zu parsen
+
 class Timer {
     private:
         uint8_t hours;
@@ -11,6 +13,11 @@ class Timer {
         uint32_t execTime;
         bool start;
         bool stop;
+
+        /*Für Uhrzeit Sync*/
+        bool isSynced;
+        String data;
+
         
     public:
         //Constructor
@@ -25,7 +32,8 @@ class Timer {
 
         void setStart(bool start){ this->start=start; }
         void setStop(bool stop){ this->stop=stop; }
-
+        void setIsSynced(bool isSynced){ this->isSynced=isSynced; }
+        void setData(String data){ this->data=data; }
 
         //getter
         uint8_t getHours(){ return this->hours; }
@@ -36,10 +44,13 @@ class Timer {
         bool getStart(){ return this->start; }
         bool getStop(){ return this->stop; }
 
+        bool getIsSynced(){ return this->isSynced; }
+
 
         //weitere Methoden
         void updateTime();
         void reset();
+        void parseJSON();
 };
 
 #endif

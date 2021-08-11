@@ -18,6 +18,7 @@
 #include "MenuController.h" //Controller
 
 #include "Timer.h" //Modell
+#include "GPS.h" //Modell 2
 #include "RunView.h" //View
 #include "RunController.h" //Controller
 
@@ -25,22 +26,40 @@
 #include "WeatherView.h" //View
 #include "WeatherController.h" //Controller
 
+//Clock Modell ist GPS da es die Zeut hält ist kein weiteres Modell für Clock nötig!
+#include "ClockView.h" //View
+#include "ClockController.h" //Controller
+
+#include <WiFiClient.h>
+#include <PubSubClient.h>
+#include "MyMQTTClient.h" //Wird genutzt um MQTT Nachrichten zu verschicken
+
 //WLAN Zugang
 const char* ssid = "NoFreeWiFi";
 const char* password = "57655658286507878869";
+
+
+//Initialisierung des PubSubClients
+WiFiClient wifiClient;
+PubSubClient pubSubClient(wifiClient);
+MyMQTTClient myMQTTClient(pubSubClient);
 
 Menu menu;
 MenuView menuView;
 MenuController menuController(menu, menuView);
 
 Timer timer;
+GPS gps;
 RunView runView;
-RunController runController(timer, runView);
+RunController runController(timer, gps, myMQTTClient, runView);
 
 Weather weather;
 WeatherView weatherView;
 WeatherController weatherController(weather, weatherView);
 
+Timer myClock; //Timer wird als Clock genutzt um doppelten Code zu vermeiden --> clock synchronisiert mit der Zeit von GPS und läuft dann unabhängig weiter!
+ClockView clockView;
+ClockController clockController(myClock, clockView);
 
 //Die Pinbezeichnungen für die Buttons lauten GPIO_NUM_39 (BtnA), GPIO_NUM_38 (BtnB) sowie GPIO_NUM_37 (BtnC).
 uint8_t buttonA = GPIO_NUM_39;
@@ -84,6 +103,7 @@ void setup() {
     //1. Initialisierung der WiFi-Verbindung
    WiFi.begin(ssid, password);
    WiFi.setSleep(false);
+
    //2. Warten auf erfolgreiche WiFi-Verbindung 
    while (WiFi.status() != WL_CONNECTED) {
       Serial.print(".");
@@ -134,13 +154,13 @@ void loop() {
       //Wenn Button C (STOP) gedrückt wird:
       attachInterrupt(buttonC, run_buttonC_clicked, RISING);
 
-      delay(1000); //Flackern verhindern...
+      delay(500); //Flackern verhindern...
    }
 
    //Wenn Nutzer im WeatherView ist:
    else if( menuController.getIsMenuVisible()==false && menuController.getCurrentId() == 1 ){
-      //weatherController.updateView();
-      weatherController.httpGet();
+      weatherController.updateView();
+      //weatherController.httpGet();
 
       //Button Interakionen
       //Wenn Button A (HEUTE) gedrückt wird:
@@ -151,7 +171,14 @@ void loop() {
       delay(1000);
    }
 
+   //Wenn Nutzer im ClockView ist:
+   else if( menuController.getIsMenuVisible() == false && menuController.getCurrentId() == 2 ){
+      clockController.updateView();
+      delay(1000);
+   }
+
    runController.updateTime(); //Timer soll auch weiterlaufen wenn der View gewechselt wird...
+   clockController.updateTime(); //Außerhalb von Clock soll Uhrzeit aktualisiert werden...
    M5.update();
 }
 

@@ -7,18 +7,15 @@
 #include "MenuItem.h"
 #include "Weather.h"
 
-class WeatherView : public MenuItem {
-    /*private:
-        int id;
-        String title;*/
-
+class WeatherView : public MenuItem{
     public:
         WeatherView(){};
         WeatherView(int id, String title);
         int getId(){ return this->id; }
         String getTitle(){ return this->title; }
 
-        void showView(Weather weather);
+        void showViewHeute(Weather weather);
+        void showViewWoche(Weather weather);
 };
 
 

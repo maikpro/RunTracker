@@ -12,6 +12,11 @@ class WeatherController {
         Weather weatherModel;
         WeatherView weatherView;
         HTTPClient httpClient;
+        bool isHeute;
+        bool isWoche;
+
+        //Local => http://192.168.178.37
+        String restUrl = "http://192.168.178.37";
     
     public:
         WeatherController(Weather weatherModel, WeatherView weatherView);
@@ -21,7 +26,8 @@ class WeatherController {
         /*zeigt Wetter der ganzen Woche an*/
         void woche();
 
-        void httpGet();
+        void httpGetHeute();
+        void httpGetWoche();
 };
 
 #endif

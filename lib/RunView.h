@@ -6,6 +6,7 @@
 
 #include "MenuItem.h"
 #include "Timer.h"
+#include "GPS.h"
 
 class RunView : public MenuItem {
     /*private:
@@ -18,8 +19,7 @@ class RunView : public MenuItem {
         int getId(){ return this->id; }
         String getTitle(){ return this->title; }
 
-        void showView(Timer timer);
-        //void showView();
+        void showView(Timer timer, GPS gps);
 };
 
 

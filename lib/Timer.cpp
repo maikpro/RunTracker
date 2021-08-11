@@ -30,6 +30,21 @@ void Timer::reset(){
   setStart(false);
   setStop(false);
   setExecTime(0);
+  setIsSynced(false);
+}
+
+void Timer::parseJSON(){
+  const int capacity = JSON_OBJECT_SIZE(60); //ca. 60 JSON Objects
+  StaticJsonDocument<capacity> doc;
+  deserializeJson(doc, this->data);
+
+  int hour = doc["hour"];
+  int minutes = doc["minute"];
+  int seconds = doc["seconds"];
+
+  setHours(hour);
+  setMinutes(minutes);
+  setSeconds(seconds);
 }
 
 
