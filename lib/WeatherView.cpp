@@ -107,10 +107,9 @@ void WeatherView::showViewWoche(Weather weather){
         x_pos = x_pos + 80;
     }
 
-
     //Steuerung
     M5.Lcd.setTextSize(1);
-    M5.Lcd.setCursor(30, 220);
+    M5.Lcd.setCursor(40, 220);
     M5.Lcd.println("Heute");
     M5.Lcd.setCursor(140, 220);
     M5.Lcd.println("Zurück");

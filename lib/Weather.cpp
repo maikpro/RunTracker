@@ -1,14 +1,15 @@
+
 #include "Weather.h"
 
-#include <M5Stack.h>
-
-Weather::Weather(float temperatur, String datum, String wochentag){
+Weather::Weather(float temperatur, String datum, String wochentag) {
     this->temperatur=temperatur;
     this->datum=datum;
     this->wochentag=wochentag;
-}  
+}
 
-void Weather::parseJSONHeute(){
+//parse String into JSON
+void Weather::parseJSONHeute() {
+
     const int capacity = JSON_OBJECT_SIZE(60); //ca. 60 JSON Objects
     StaticJsonDocument<capacity> doc;
     deserializeJson(doc, this->data);
@@ -26,11 +27,8 @@ void Weather::parseJSONHeute(){
     setCity(city);
 }
 
-void Weather::clearArrays(){
-    this->wocheTemperaturen.clear();
-}
+void Weather::parseJSONWoche() {
 
-void Weather::parseJSONWoche(){
     clearArrays();
     const int capacity = JSON_OBJECT_SIZE(60); //ca. 60 JSON Objects
     StaticJsonDocument<capacity> doc;
@@ -46,3 +44,10 @@ void Weather::parseJSONWoche(){
         this->wocheDescription.push_back(description);
     }
 }
+
+//leere die Arrays mit den Wochendaten!
+void Weather::clearArrays() {
+
+    this->wocheTemperaturen.clear();
+}
+

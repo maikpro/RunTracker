@@ -6,6 +6,7 @@ SettingsView::SettingsView(int id, String title){
 }
 
 void SettingsView::showView(){
-    M5.Lcd.setCursor(180, 110);
-    M5.Lcd.println("New Settings");
+    M5.Lcd.clearDisplay();
+    M5.Lcd.setCursor(140, 110);
+    M5.Lcd.println("Settings Funktion...");
 }

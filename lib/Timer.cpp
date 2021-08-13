@@ -30,7 +30,6 @@ void Timer::reset(){
   setStart(false);
   setStop(false);
   setExecTime(0);
-  setIsSynced(false);
 }
 
 void Timer::parseJSON(){

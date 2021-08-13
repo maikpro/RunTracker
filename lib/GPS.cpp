@@ -101,27 +101,3 @@ void GPS::updateAll(){
   updateTime();
   updateDate();
 }
-
-void GPS::setPosition(){
-  if( this->isDistanceMode == false ){
-    //Start
-    this->latPosA = this->tinyGPSPlus.location.lat();
-    this->lngPosA = this->tinyGPSPlus.location.lng();
-    this->endTime = 0;
-    this->isDistanceMode = true;
-    this->dauer=-1;
-  } else{
-    //Ende
-    this->latPosB = this->tinyGPSPlus.location.lat();
-    this->lngPosB = this->tinyGPSPlus.location.lng();
-    this->dauer = this->endTime - this->startTime;
-    this->distance = this->tinyGPSPlus.distanceBetween(this->latPosA, this->lngPosA, this->latPosB, this->lngPosB);
-    this->isDistanceMode = false;
-  }
-}
-
-
-
-
-
-

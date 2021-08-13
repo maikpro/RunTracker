@@ -1,6 +1,7 @@
 #include "WeatherController.h"
 
-WeatherController::WeatherController(Weather weatherModel, WeatherView weatherView){
+WeatherController::WeatherController(String restUrl, Weather weatherModel, WeatherView weatherView){
+    this->restUrl=restUrl;
     this->weatherModel=weatherModel;
     this->weatherView=weatherView;
 
@@ -35,7 +36,7 @@ void WeatherController::woche(){
 void WeatherController::httpGetHeute(){
     //this->httpClient.begin("https://api.openweathermap.org/data/2.5/weather?q=osnabrueck&units=metric&appid=" + myApiKey);
     
-    this->httpClient.begin(restUrl + "/weather/api/heute"); //REST API vom NodeJS Server
+    this->httpClient.begin(this->restUrl + "/weather/api/heute"); //REST API vom NodeJS Server
     int httpStatus = httpClient.GET();
     
     if(httpStatus == 200){

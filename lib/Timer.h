@@ -15,7 +15,6 @@ class Timer {
         bool stop;
 
         /*Für Uhrzeit Sync*/
-        bool isSynced;
         String data;
 
         
@@ -32,7 +31,6 @@ class Timer {
 
         void setStart(bool start){ this->start=start; }
         void setStop(bool stop){ this->stop=stop; }
-        void setIsSynced(bool isSynced){ this->isSynced=isSynced; }
         void setData(String data){ this->data=data; }
 
         //getter
@@ -43,8 +41,6 @@ class Timer {
 
         bool getStart(){ return this->start; }
         bool getStop(){ return this->stop; }
-
-        bool getIsSynced(){ return this->isSynced; }
 
 
         //weitere Methoden

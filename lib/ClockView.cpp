@@ -14,6 +14,6 @@ void ClockView::showView(Timer myClock){
 
     //Steuerung
     M5.Lcd.setTextSize(1);
-    M5.Lcd.setCursor(120, 220);
+    M5.Lcd.setCursor(100, 220);
     M5.Lcd.println("Zurück");
 }

@@ -12,9 +12,10 @@ class ClockController {
         Timer myClock;
         ClockView clockView;
         HTTPClient httpClient;
+        String restUrl; 
     
     public:
-        ClockController(Timer myClock, ClockView clockView);
+        ClockController(String restUrl, Timer myClock, ClockView clockView);
         void updateView();
         /*synchronisiert Clock einmal mit der Zeit aus einer Zeit-API*/
         void synchronization();

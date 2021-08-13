@@ -27,7 +27,7 @@ void RunController::sendGPSData(){
     
     //gps Koordinaten auslesen und in ein Buffer stecken => in JSON-Format!
     char gpsData[512];
-    sprintf(gpsData, "{ \"gpsLat\": %.6f, \"gpsLng\": %.6f, \"date\": \"%02d.%02d.%02d\", \"time\": \"%02d:%02d:%02d\" }", this->gps.getLat(), this->gps.getLng(), this->gps.getDate().tag, this->gps.getDate().monat, this->gps.getDate().jahr, this->gps.getTime().h+2, this->gps.getTime().min, this->gps.getTime().sec);
+    sprintf(gpsData, "{ \"gpsLat\": %.6f, \"gpsLng\": %.6f, \"date\": \"%02d.%02d.%02d\", \"time\": \"%02d:%02d:%02d\",  \"spentTime\": \"%02d:%02d:%02d\" }", this->gps.getLat(), this->gps.getLng(), this->gps.getDate().tag, this->gps.getDate().monat, this->gps.getDate().jahr, this->gps.getTime().h+2, this->gps.getTime().min, this->gps.getTime().sec, this->timerModel.getHours(), this->timerModel.getMinutes(), this->timerModel.getSeconds());
     this->myMQTTClient.publish(topic, gpsData);
 }
 

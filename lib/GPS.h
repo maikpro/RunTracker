@@ -27,32 +27,10 @@ class GPS {
             uint16_t jahr;
         } date;
 
-        //Dauer
-        uint32_t startTime;
-        uint32_t endTime;
-
-        //aktuelle Position
-        double latPosA; 
-        double lngPosA;
-        
-        //nächste Position
-        double latPosB;
-        double lngPosB;
-
-        //ist Distanzmodus an?
-        bool isDistanceMode=false;
-        
-        int dauer=-99;
-        double distance=-99;
-
         
     public:
         //Constructor
         GPS();
-
-        //getter
-        int getDauer(){return this->dauer;};
-        double getDistance(){return this->distance;};
 
         //display
         uint32_t getSatAnz();

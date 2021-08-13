@@ -30,7 +30,6 @@ class RunController {
         void start();
         void pause();
         void stop();
-        void buttonInteractions(uint8_t pinButtonA, uint8_t pinButtonB, uint8_t pinButtonC);
 };
 
 #endif

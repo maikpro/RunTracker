@@ -15,11 +15,12 @@ class WeatherController {
         bool isHeute;
         bool isWoche;
 
-        //Local => http://192.168.178.37
-        String restUrl = "http://192.168.178.37";
+        String restUrl;
+        //Local => http://192.168.178.37:3000
+        //String restUrl = "http://192.168.178.37:3000";
     
     public:
-        WeatherController(Weather weatherModel, WeatherView weatherView);
+        WeatherController(String restUrl, Weather weatherModel, WeatherView weatherView);
         void updateView();
         /*zeigt heutiges Wetter an*/
         void heute();
