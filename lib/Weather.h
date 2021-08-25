@@ -1,76 +1,45 @@
-#ifndef _WEATHER_H
-#define _WEATHER_H
+/**
+ * Hochschule Osnabrück - Modul: Internet of Things / Industrie 4.0
+ * Projekt: RunTracker
+ * Tech-Stack: M5Stack (C/C++), MQTT Broker (HIVEMQ), NodeJS (Server), MongoDB
+ *
+ * @author Maik Proba
+ * Contact: maik.proba@hs-osnabrueck.de
+ * 
+ *  
+ */
 
-#include <ArduinoJson.h> //Um JSON Objekte zu parsen
+#ifndef WEATHER_H
+#define WEATHER_H
 
-#include <vector>
-using namespace std;
+#include "Arduino.h"
 
 class Weather {
   private:
-    float temperatur;
-
+    String temperatur;
     String datum;
-
     String wochentag;
-
-    //Daten aus der OpenWeatherApi
-    String data;
-
     //Sonnig, Bewölkt, Regen, ...
-    String desc;
-
+    String description;
     String city;
-
-    vector<String> wocheTemperaturen;
-
-    vector<String> wocheDatum;
-
-    vector<String> wocheDescription;
 
 
   public:
     Weather() {};
+    Weather(String temperatur, String datum, String wochentag, String description, String city); //HEUTE MIT CITY
+    Weather(String temperatur, String datum, String wochentag, String description); //WOCHE WEATHER OHNE CITY
 
-    Weather(float temperatur, String datum, String wochentag);
-
-    void setTemperatur(float temperatur) { this->temperatur=temperatur; };
-
+    void setTemperatur(String temperatur) { this->temperatur=temperatur; };
     void setDatum(String datum) { this->datum=datum; };
-
     void setWochentag(String wochentag) { this->wochentag=wochentag; };
-
-    void setData(String data) { this->data=data; };
-
-    void setDesc(String desc) { this->desc=desc; };
-
+    void setDesc(String description) { this->description=description; };
     void setCity(String city) { this->city=city; };
-
-    float getTemperatur() { return this->temperatur; };
-
+    
+    String getTemperatur() { return this->temperatur; };
     String getDatum() { return this->datum; };
-
     String getWochentag() { return this->wochentag; };
-
-    String getData() { return this->data; };
-
-    String getDesc() { return this->desc; };
-
+    String getDescription() { return this->description; };
     String getCity() { return this->city; };
-
-    vector<String> getWocheTemperaturen() { return this->wocheTemperaturen; };
-
-    vector<String> getWocheDatum() { return this->wocheDatum; };
-
-    vector<String> getWocheDescription() { return this->wocheDescription; };
-
-    //parse String into JSON
-    void parseJSONHeute();
-
-    void parseJSONWoche();
-
-    //leere die Arrays mit den Wochendaten!
-    void clearArrays();
-
 };
+
 #endif

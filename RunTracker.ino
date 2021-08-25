@@ -29,6 +29,7 @@
 #include "ClockView.h" //View
 #include "ClockController.h" //Controller
 
+#include "Settings.h"
 #include "SettingsView.h"
 #include "SettingsController.h"
 
@@ -37,11 +38,15 @@
 #include "MyMQTTClient.h" //Wird genutzt um MQTT Nachrichten zu verschicken
 
 //WLAN Zugang
-const char* ssid = "NoFreeWiFi";
-const char* password = "57655658286507878869";
+/*const char* ssid = "NoFreeWiFi";
+const char* password = "57655658286507878869";*/
 
-//Server IP + Port:
-String restUrl = "http://192.168.178.37:3000";
+//Hotspot Zugriff
+const char* ssid = "mpwlan";
+const char* password = "mpdesh9!";
+
+//Server IP + Port:"http://192.168.178.37:3000/"
+String restUrl = "https://stale-rattlesnake-65.loca.lt";
 
 //Initialisierung des PubSubClients
 WiFiClient wifiClient;
@@ -71,9 +76,9 @@ ClockView clockView;
 ClockController clockController(restUrl, myClock, clockView);
 
 //Settings-Funktion
-//kein Settings Modell
+Settings settings(ssid, password, restUrl);
 SettingsView settingsView;
-SettingsController settingsController(settingsView);
+SettingsController settingsController(settings, settingsView);
 
 //Die Pinbezeichnungen für die Buttons lauten GPIO_NUM_39 (BtnA), GPIO_NUM_38 (BtnB) sowie GPIO_NUM_37 (BtnC).
 uint8_t buttonA = GPIO_NUM_39;
@@ -109,6 +114,11 @@ void weather_buttonA_clicked(){
 
 void weather_buttonC_clicked(){
    weatherController.woche();
+}
+
+//als Platzhalter soll die Belegungen vorher ersetzen...
+void notUsed(){
+
 }
 
 void setup() {
@@ -167,14 +177,22 @@ void loop() {
    //Wenn Nutzer im ClockView ist:
    else if( menuController.getIsMenuVisible() == false && menuController.getCurrentId() == 2 ){
       clockController.updateView();
+      //Wenn Button A gedrückt wird:
+      attachInterrupt(buttonA, notUsed, RISING);
+      //Wenn Button C gedrückt wird:
+      attachInterrupt(buttonC, notUsed, RISING);
       delay(750);
    }
 
    else if( menuController.getIsMenuVisible() == false && menuController.getCurrentId() == 3 ){
       settingsController.updateView();
+      //Wenn Button A gedrückt wird:
+      attachInterrupt(buttonA, notUsed, RISING);
+      //Wenn Button C gedrückt wird:
+      attachInterrupt(buttonC, notUsed, RISING);
+      delay(1000);
    }
 
    runController.updateTime(); //Timer soll auch weiterlaufen wenn der View gewechselt wird...
    M5.update();
 }
-

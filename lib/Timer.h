@@ -1,3 +1,14 @@
+/**
+ * Hochschule Osnabrück - Modul: Internet of Things / Industrie 4.0
+ * Projekt: RunTracker
+ * Tech-Stack: M5Stack (C/C++), MQTT Broker (HIVEMQ), NodeJS (Server), MongoDB
+ *
+ * @author Maik Proba
+ * Contact: maik.proba@hs-osnabrueck.de
+ * 
+ *  
+ */
+
 #ifndef TIMER_H
 #define TIMER_H
 
@@ -16,6 +27,7 @@ class Timer {
 
         /*Für Uhrzeit Sync*/
         String data;
+        String date;
 
         
     public:
@@ -32,6 +44,7 @@ class Timer {
         void setStart(bool start){ this->start=start; }
         void setStop(bool stop){ this->stop=stop; }
         void setData(String data){ this->data=data; }
+        void setDate(String date){ this->date=date; }
 
         //getter
         uint8_t getHours(){ return this->hours; }
@@ -41,6 +54,8 @@ class Timer {
 
         bool getStart(){ return this->start; }
         bool getStop(){ return this->stop; }
+
+        String getDate(){ return this->date; }
 
 
         //weitere Methoden

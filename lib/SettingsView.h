@@ -5,19 +5,17 @@
 #include <M5Stack.h>
 
 #include "MenuItem.h"
+#include "Settings.h" //Modell
 
 class SettingsView : public MenuItem {
-    /*private:
-        int id;
-        String title;*/
-
+    
     public:
         SettingsView(){};
         SettingsView(int id, String title);
         int getId(){ return this->id; }
         String getTitle(){ return this->title; }
 
-        void showView();
+        void showView(Settings settings);
 };
 
 

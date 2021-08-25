@@ -1,3 +1,15 @@
+
+/**
+ * Hochschule Osnabrück - Modul: Internet of Things / Industrie 4.0
+ * Projekt: RunTracker
+ * Tech-Stack: M5Stack (C/C++), MQTT Broker (HIVEMQ), NodeJS (Server), MongoDB
+ *
+ * @author Maik Proba
+ * Contact: maik.proba@hs-osnabrueck.de
+ * 
+ *  
+ */
+
 #include "Gps.h"
 
 //Constructor member initializer list -> ein anderes Objekt initialisieren innerhalb der Klasse
@@ -46,24 +58,17 @@ void GPS::updateCoords(){
   if( this->tinyGPSPlus.location.isValid() ){
     //latitude = Breitengrad
     //uint16_t lat = this->tinyGPSPlus.location.rawLat().deg;
-    this->lat = this->tinyGPSPlus.location.lat();
+    //this->lat = this->tinyGPSPlus.location.lat();
     //longitude = Längengrad
-    this->lng = this->tinyGPSPlus.location.lng();
+    //this->lng = this->tinyGPSPlus.location.lng();
+    this->gpsPostion.setLat(this->tinyGPSPlus.location.lat());
+    this->gpsPostion.setLng(this->tinyGPSPlus.location.lng());
+
   } else{
     //Dummy Coords
-    this->lat = 52.2163121111111;
-    this->lng = 7.943018;
+    this->gpsPostion.setLat(-99);
+    this->gpsPostion.setLng(-99);
   }
-}
-
-/*zeigt die aktuelle Position auf dem Breitengrad an.*/
-double GPS::getLat(){
-  return this->lat;
-}
-
-/*zeigt die aktuelle Position auf dem Längengrad an.*/
-double GPS::getLng(){
-  return this->lng;
 }
 
 void GPS::updateTime(){
@@ -100,4 +105,8 @@ void GPS::updateAll(){
   updateCoords();
   updateTime();
   updateDate();
+}
+
+void GPS::distanceBerechnen(){
+  this->distance = this->tinyGPSPlus.distanceBetween(this->startPosition.getLat(), this->startPosition.getLng(), this->endPosition.getLat(), this->endPosition.getLng());
 }

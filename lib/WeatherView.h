@@ -1,3 +1,14 @@
+/**
+ * Hochschule Osnabrück - Modul: Internet of Things / Industrie 4.0
+ * Projekt: RunTracker
+ * Tech-Stack: M5Stack (C/C++), MQTT Broker (HIVEMQ), NodeJS (Server), MongoDB
+ *
+ * @author Maik Proba
+ * Contact: maik.proba@hs-osnabrueck.de
+ * 
+ *  
+ */
+
 #ifndef WEATHERVIEW_H
 #define WEATHERVIEW_H
 
@@ -7,6 +18,9 @@
 #include "MenuItem.h"
 #include "Weather.h"
 
+#include <vector>
+using namespace std;
+
 class WeatherView : public MenuItem{
     public:
         WeatherView(){};
@@ -15,7 +29,7 @@ class WeatherView : public MenuItem{
         String getTitle(){ return this->title; }
 
         void showViewHeute(Weather weather);
-        void showViewWoche(Weather weather);
+        void showViewWoche(Weather weather, vector<Weather> weatherWoche);
 };
 
 

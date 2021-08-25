@@ -1,53 +1,30 @@
+/**
+ * Hochschule Osnabrück - Modul: Internet of Things / Industrie 4.0
+ * Projekt: RunTracker
+ * Tech-Stack: M5Stack (C/C++), MQTT Broker (HIVEMQ), NodeJS (Server), MongoDB
+ *
+ * @author Maik Proba
+ * Contact: maik.proba@hs-osnabrueck.de
+ * 
+ *  
+ */
 
 #include "Weather.h"
 
-Weather::Weather(float temperatur, String datum, String wochentag) {
-    this->temperatur=temperatur;
-    this->datum=datum;
-    this->wochentag=wochentag;
-}
-
-//parse String into JSON
-void Weather::parseJSONHeute() {
-
-    const int capacity = JSON_OBJECT_SIZE(60); //ca. 60 JSON Objects
-    StaticJsonDocument<capacity> doc;
-    deserializeJson(doc, this->data);
-    
-    //Temperatur des Wetters
-    float temp = doc["main"]["feels_like"];
-    setTemperatur(temp);
-
-    //Beschreibung Bewölkt, Regen, Sonne...
-    String desc = doc["weather"][0]["main"];
-    setDesc(desc);
-
-    //Stadtname
-    String city = doc["name"];
+Weather::Weather(String temperatur, String datum, String wochentag, String description, String city) {
+    setTemperatur(temperatur);
+    setDatum(datum);
+    setWochentag(wochentag);
+    setDesc(description);
     setCity(city);
 }
 
-void Weather::parseJSONWoche() {
-
-    clearArrays();
-    const int capacity = JSON_OBJECT_SIZE(60); //ca. 60 JSON Objects
-    StaticJsonDocument<capacity> doc;
-    deserializeJson(doc, this->data);
-
-
-    for(int i = 0; i < doc.size(); i++){
-        String temp = doc[i]["temp"];
-        this->wocheTemperaturen.push_back(temp);
-        String date = doc[i]["date"];
-        this->wocheDatum.push_back(date);
-        String description = doc[i]["description"];
-        this->wocheDescription.push_back(description);
-    }
+Weather::Weather(String temperatur, String datum, String wochentag, String description) {
+    setTemperatur(temperatur);
+    setDatum(datum);
+    setWochentag(wochentag);
+    setDesc(description);
 }
 
-//leere die Arrays mit den Wochendaten!
-void Weather::clearArrays() {
 
-    this->wocheTemperaturen.clear();
-}
 

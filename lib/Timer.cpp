@@ -1,3 +1,14 @@
+/**
+ * Hochschule Osnabrück - Modul: Internet of Things / Industrie 4.0
+ * Projekt: RunTracker
+ * Tech-Stack: M5Stack (C/C++), MQTT Broker (HIVEMQ), NodeJS (Server), MongoDB
+ *
+ * @author Maik Proba
+ * Contact: maik.proba@hs-osnabrueck.de
+ * 
+ *  
+ */
+
 #include "Arduino.h"
 #include "Timer.h"
 
@@ -41,9 +52,12 @@ void Timer::parseJSON(){
   int minutes = doc["minute"];
   int seconds = doc["seconds"];
 
+  String date = doc["date"];
+
   setHours(hour);
   setMinutes(minutes);
   setSeconds(seconds);
+  setDate(date);
 }
 
 
